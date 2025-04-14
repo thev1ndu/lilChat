@@ -60,6 +60,12 @@
     const sendMessage = () => {
         var sender = document.getElementById('senderInput').value;
         var content = document.getElementById('messageInput').value;
+        var chatMessage = {
+            sender: sender,
+            content: content
+        }
+        // send the message to the server via Stomp Client
+        stompClient.send("app/sendMessage", {}, JSON.stringify(chatMessage));
     }
 </script>
 </html>
