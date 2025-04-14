@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>lilChat | real time messaging</title>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@5.0.0/bundles/stomp.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -52,8 +52,8 @@
         var chat = document.getElementById('chat');
         var messageElement = document.createElement('div');
         messageElement.textContent = message.sender + ': ' + message.content;
-        messageElement.class = "border-bottom mb-1";
         chat.appendChild(messageElement)
+        console.log(messageElement)
         chat.scrollTop = chat.scrollHeight;
     }
 
@@ -65,7 +65,10 @@
             content: content
         }
         // send the message to the server via Stomp Client
-        stompClient.send("app/sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));
+        document.getElementById('messageInput').value = '';
     }
+    document.getElementById('sendMessage').onclick = sendMessage;
+    window.onload = connect;
 </script>
 </html>
