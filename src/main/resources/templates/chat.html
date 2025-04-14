@@ -32,4 +32,20 @@
         </div>
     </div>
 </body>
+<script>
+    const setConnected = (connected) => {
+        document.getElementById('sendMessage').disabled = !connected;
+    }
+
+    const connect = () => {
+        var socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+           setConnected(true);
+           stompClient.subscribe('/topic/messages', function (message) {
+               showMessage(JSON.parse(message.body));
+           });
+        });
+    }
+</script>
 </html>
